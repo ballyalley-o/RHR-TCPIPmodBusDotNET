@@ -3,7 +3,13 @@
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
 
         'creates an instance of ModSIM constructor via this IP
-        Dim modbusClient As New EasyModbus.ModbusClient("192.168.0.187", 502)
+        'Dim modbusClient As New EasyModbus.ModbusClient("192.168.0.187", 502)
+
+        Dim modbusClient As New EasyModbus.ModbusClient("COM5")
+        modbusClient.UnitIdentifier = 1
+        modbusClient.Baudrate = 9600
+        modbusClient.Parity = System.IO.Ports.Parity.None
+        modbusClient.StopBits = System.IO.Ports.StopBits.One
 
         'attempt a connection
         modbusClient.Connect()
@@ -30,7 +36,7 @@
         End If
 
         'read coil status value 
-        Dim CoilStatusArray As Boolean() = modbusClient.ReadCoils(4, 1)
+        Dim CoilStatusArray As Boolean() = modbusClient.ReadCoils(3, 1)
 
         If (CoilStatusArray(0) = True) Then
             lblValueCS.Text = "ON"
@@ -49,7 +55,13 @@
         Dim regval As Integer
 
         'creates an instance of ModSIM constructor via this IP
-        Dim modbusClient As New EasyModbus.ModbusClient("192.168.0.187", 502)
+        'Dim modbusClient As New EasyModbus.ModbusClient("192.168.0.187", 502)
+
+        Dim modbusClient As New EasyModbus.ModbusClient("COM5")
+        modbusClient.UnitIdentifier = 1
+        modbusClient.Baudrate = 9600
+        modbusClient.Parity = System.IO.Ports.Parity.None
+        modbusClient.StopBits = System.IO.Ports.StopBits.One
 
         'attempt a connection
         modbusClient.Connect()
@@ -69,16 +81,34 @@
 
         Dim coilVal As Boolean
 
+        Dim myMessage As String
+
+
+
+
         'creates an instance of ModSIM constructor via this IP
-        Dim modbusClient As New EasyModbus.ModbusClient("192.168.0.187", 502)
+        'Dim modbusClient As New EasyModbus.ModbusClient("192.168.0.187", 502)
+
+        Dim modbusClient As New EasyModbus.ModbusClient("COM5")
+        modbusClient.UnitIdentifier = 1
+        modbusClient.Baudrate = 9600
+        modbusClient.Parity = System.IO.Ports.Parity.None
+        modbusClient.StopBits = System.IO.Ports.StopBits.One
+
 
         'attempt a connection
         modbusClient.Connect()
 
         If (txtCoilVal.Text = "1") Then
             coilVal = True
-        Else
+
+        ElseIf (txtCoilVal.Text = "0") Then
             coilVal = False
+        Else
+            myMessage = "Only 1 for ON & 0 for OFF"
+            MsgBox(myMessage)
+
+            txtCoilVal.Clear()
         End If
 
         'display the coil val
