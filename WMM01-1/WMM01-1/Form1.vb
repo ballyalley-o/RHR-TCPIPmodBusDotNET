@@ -19,20 +19,27 @@
 
         'receive and display the value
         lblValueHR.Text = HoldingRegistersArray(0).ToString
+        prbgGrpxHR.Value = HoldingRegistersArray(0)
 
         'input register
         Dim InputRegistersArray As Integer() = modbusClient.ReadInputRegisters(2, 1)
 
         'display the input register value
         lblValueIR.Text = InputRegistersArray(0).ToString
+        prbgGrpxIR.value = InputRegistersArray(0)
 
         'read input status array as boolean
         Dim InputStatusArray As Boolean() = modbusClient.ReadDiscreteInputs(1, 1)
 
         If (InputStatusArray(0) = True) Then
             lblValueIS.Text = "ON"
+            lblValueIS.BackColor = Color.Green
+            txtGrpxIS.BackColor = Color.Green
         Else
             lblValueIS.Text = "OFF"
+            lblValueIS.BackColor = Color.Red
+            txtGrpxIS.BackColor = Color.Red
+
         End If
 
         'read coil status value 
@@ -40,8 +47,12 @@
 
         If (CoilStatusArray(0) = True) Then
             lblValueCS.Text = "ON"
+            lblValueCS.BackColor = Color.Green
+            txtGrpxCS.BackColor = Color.Green
         Else
             lblValueCS.Text = "OFF"
+            lblValueCS.BackColor = Color.Red
+            txtGrpxCS.BackColor = Color.Red
         End If
 
 
@@ -118,4 +129,6 @@
         modbusClient.Disconnect()
 
     End Sub
+
+
 End Class
